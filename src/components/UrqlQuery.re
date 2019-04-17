@@ -42,12 +42,17 @@ let urqlDataToRecord = (result: queryRenderPropsJs('a)) => {
 [@bs.deriving abstract]
 type jsProps = {
   query: string,
-  [@bs.optional]
   variables: Js.Json.t,
   requestPolicy: string,
 };
 
-let make = (~query, ~variables, ~requestPolicy=`CacheFirst, children) =>
+let make =
+    (
+      ~query,
+      ~variables=Js.Json.object_(Js.Dict.empty()),
+      ~requestPolicy=`CacheFirst,
+      children,
+    ) =>
   ReasonReact.wrapJsForReason(
     ~reactClass=queryComponent,
     ~props=
